@@ -44,6 +44,8 @@ class Convertor:
 
     def download_mp3(self):
         url = self.url_entry.get()
+        url = self.remove_playlist_slug(url)
+
         if not url:
             messagebox.showerror("Error", "Please enter a valid YouTube URL.")
             return
@@ -56,20 +58,25 @@ class Convertor:
                     'preferredquality': '192',
                 }],
                 # output path
-                'outtmpl': os.path.join('output', '%(title)s.%(ext)s')
+                'outtmpl': os.path.join('output', '%(title)s.%(ext)s'),
             }
 
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
-            
-            messagebox.showinfo("Success", "Download Complete: %(title)s")
+
         except Exception as e:
             print(e)
 
+    # download single video, not whole playlist
+    def remove_playlist_slug(self, url):
+        if '&list=' in url:
+            url = url.split('&list=')[0]
+        return url
 
 root = tk.Tk()
 app = Convertor(root)
 root.mainloop()
 
-
+# testing links
 # https://www.youtube.com/watch?v=p3iDtps7dL8
+# https://www.youtube.com/watch?v=IbKYcJ3DzYk&list=PLH1TkRvPd30Pa6QupChBNefWLREdW9Br9&index=9
