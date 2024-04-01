@@ -28,6 +28,9 @@ class Convertor:
         # self.mp4_button = tk.Button(root, text="Download as MP4", command=self.download_mp4)
         # self.mp4_button.pack()
 
+        self.download_status_label = tk.Label(root, text="")
+        self.download_status_label.pack()
+
     def center_window(self, window):
 
         screen_width = window.winfo_screenwidth()
@@ -62,7 +65,10 @@ class Convertor:
             }
 
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                ydl.download([url])
+                info = ydl.extract_info(url, download=True)
+                title = info.get('title', 'Title Unavailable')
+                
+            self.download_status_label.config(text=f"Download complete: {title}")
 
         except Exception as e:
             print(e)
