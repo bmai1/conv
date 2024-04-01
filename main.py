@@ -9,18 +9,20 @@ class Convertor:
         self.root = root
 
         root.title("Convertor")
-        root.geometry("600x150")
+        root.geometry("600x300")
+        # root.configure(background='black')
+
         self.center_window(root)
 
-        self.url_label = tk.Label(root, text="Enter YouTube URL:")
-        self.url_label.pack(pady=5)
+        self.url_label = tk.Label(root, text="Enter YouTube URL:", font=("Helvetica Neue", 15))
+        self.url_label.pack(pady=(75, 5))
 
 
         self.url_entry = tk.Entry(root, width=50)
         self.url_entry.pack(pady=10)
 
-
-        self.mp3_button = tk.Button(root, text="Download as MP3", command=self.download_mp3)
+        
+        self.mp3_button = tk.Button(root, text="Download as MP3", font=("Helvetica Neue", 12), command=self.download_mp3)
         self.mp3_button.pack()
 
         # self.mp4_button = tk.Button(root, text="Download as MP4", command=self.download_mp4)
@@ -60,7 +62,7 @@ class Convertor:
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
             
-            messagebox.showinfo("Success", "Download Complete")
+            messagebox.showinfo("Success", "Download Complete: %(title)s")
         except Exception as e:
             print(e)
 
