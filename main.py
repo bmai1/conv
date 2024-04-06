@@ -2,7 +2,10 @@ import tkinter as tk
 from tkinter import messagebox
 
 import yt_dlp
+from pytube import YouTube
+
 import os
+
 
 class Convertor:
     def __init__(self, root):
@@ -25,8 +28,8 @@ class Convertor:
         self.mp3_button = tk.Button(root, text="Download as MP3", font=("Helvetica Neue", 12), command=self.download_mp3)
         self.mp3_button.pack()
 
-        # self.mp4_button = tk.Button(root, text="Download as MP4", command=self.download_mp4)
-        # self.mp4_button.pack()
+        self.mp4_button = tk.Button(root, text="Download as MP4", font=("Helvetica Neue", 12), command=self.download_mp4)
+        self.mp4_button.pack()
 
         self.download_status_label = tk.Label(root, text="")
         self.download_status_label.pack()
@@ -70,6 +73,23 @@ class Convertor:
                 
             self.download_status_label.config(text=f"Download complete: {title}")
 
+        except Exception as e:
+            print(e)
+
+    def download_mp4(self):
+        url = self.url_entry.get()
+        url = self.remove_playlist_slug(url)
+
+        try:
+            yt = YouTube(url)
+
+            # stream = yt.streams.filter(file_extension='mp4').first()
+            # stream.download("output_mov")
+
+            yd = yt.streams.get_highest_resolution()
+            yd.download("output_mov")
+
+            self.download_status_label.config(text=f"Download complete: {yt.title}")
         except Exception as e:
             print(e)
 
