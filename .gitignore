@@ -1,4 +1,6 @@
 .DS_Store
 mai.command
 *.mp3
+*.mp4
+*.mov
 test.py
