@@ -1,6 +1,6 @@
 .DS_Store
-mai.command
-*.mp3
+mai
 *.mp4
 *.mov
 test.py
+.venv
